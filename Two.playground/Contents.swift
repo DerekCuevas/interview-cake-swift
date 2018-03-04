@@ -3,9 +3,9 @@
 import UIKit
 
 func getProductOfAllIntsExceptAtIndex(numbers: [Int]) -> [Int] {
-    var products = [Int]()
+    var products: [Int] = []
     
-    for (index, number) in numbers.enumerated() {
+    for index in 0..<numbers.count {
         var productForIndex = 1
         
         for (otherIndex, otherNumber) in numbers.enumerated() {
