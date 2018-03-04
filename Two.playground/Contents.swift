@@ -20,8 +20,29 @@ func getProductOfAllIntsExceptAtIndex(numbers: [Int]) -> [Int] {
     return products
 }
 
+func getProductBeforeEach(numbers: [Int]) -> [Int] {
+    var productsBeforeEach: [Int] = []
+    var productBefore = 1
+    
+    for number in numbers {
+        productsBeforeEach.append(productBefore)
+        productBefore *= number
+    }
+    
+    return productsBeforeEach
+}
+
+func getProductOfAllIntsExceptAtIndexFast(numbers: [Int]) -> [Int] {
+    var productsBeforeEach = getProductBeforeEach(numbers: numbers)
+    var productsAfterEach = getProductBeforeEach(numbers: numbers.reversed()).reversed()
+    
+    return zip(productsBeforeEach, productsAfterEach).map { (beforeProduct: Int, afterProduct: Int) -> Int in
+        beforeProduct * afterProduct
+    }
+}
+
 let numbers = [1, 7, 3, 4]
-let products = getProductOfAllIntsExceptAtIndex(numbers: numbers)
+let products = getProductOfAllIntsExceptAtIndexFast(numbers: numbers)
 
 products == [84, 12, 28, 21]
 
