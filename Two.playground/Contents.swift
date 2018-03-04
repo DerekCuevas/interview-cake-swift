@@ -9,7 +9,7 @@ func getProductOfAllIntsExceptAtIndex(numbers: [Int]) -> [Int] {
         var productForIndex = 1
         
         for (otherIndex, otherNumber) in numbers.enumerated() {
-            if (index != otherIndex) {
+            if index != otherIndex {
                 productForIndex *= otherNumber
             }
         }
@@ -33,8 +33,8 @@ func getProductBeforeEach(numbers: [Int]) -> [Int] {
 }
 
 func getProductOfAllIntsExceptAtIndexFast(numbers: [Int]) -> [Int] {
-    var productsBeforeEach = getProductBeforeEach(numbers: numbers)
-    var productsAfterEach = getProductBeforeEach(numbers: numbers.reversed()).reversed()
+    let productsBeforeEach = getProductBeforeEach(numbers: numbers)
+    let productsAfterEach = getProductBeforeEach(numbers: numbers.reversed()).reversed()
     
     return zip(productsBeforeEach, productsAfterEach).map { (beforeProduct: Int, afterProduct: Int) -> Int in
         beforeProduct * afterProduct
