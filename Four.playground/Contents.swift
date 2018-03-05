@@ -2,7 +2,7 @@
 
 import UIKit
 
-struct Meeting {
+struct Meeting: Equatable {
     let startTime: TimeInterval
     let endTime: TimeInterval
     
@@ -23,6 +23,10 @@ struct Meeting {
             startTime: min(meeting.startTime, self.startTime),
             endTime: max(meeting.endTime, self.endTime)
         )
+    }
+    
+    static func ==(lhs: Meeting, rhs: Meeting) -> Bool {
+        return lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
 }
 
@@ -65,4 +69,6 @@ let meetings = [
 
 let merged = mergeMeetings(meetings: meetings)
 let condensed = [Meeting(startTime: 0, endTime: 2), Meeting(startTime: 3, endTime: 6)]
+
+print(merged == condensed)
 
