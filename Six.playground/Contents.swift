@@ -2,6 +2,19 @@
 
 import UIKit
 
+extension Range {
+    func intersection(range: Range) -> Range? {
+        if !self.overlaps(range) {
+            return nil
+        }
+        
+        let lowerBound = max(range.lowerBound, self.lowerBound)
+        let upperBound = min(range.upperBound, self.upperBound)
+        
+        return lowerBound ..< upperBound
+    }
+}
+
 struct Rect {
     let x: Double
     let y: Double
@@ -30,8 +43,17 @@ struct Rect {
             return nil
         }
         
-        // TODO: return Rect w/intersecting vertical + horizontal ranges
-        return self
+        if let horizontalIntersection = horizontalRange.intersection(range: rect.horizontalRange),
+            let verticalIntersection = verticalRange.intersection(range: rect.verticalRange) {
+            return Rect(
+                x: horizontalIntersection.lowerBound,
+                y: verticalIntersection.lowerBound,
+                width: horizontalIntersection.upperBound - horizontalIntersection.lowerBound,
+                height: verticalIntersection.upperBound - verticalIntersection.lowerBound
+            )
+        }
+        
+        return nil
     }
 }
 
@@ -39,5 +61,3 @@ let rectA = Rect(x: 0, y: 0, width: 10, height: 10)
 let rectB = Rect(x: 2, y: 5, width: 5, height: 5)
 
 let intersectingRect = rectA.intersection(rect: rectB)
-
-print(rectA.isOverlap(rect: rectB))
