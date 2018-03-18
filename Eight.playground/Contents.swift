@@ -48,9 +48,38 @@ indirect enum Tree<Element: Comparable> {
         }
     }
     
+    func getHeightBy(comparator: (Int, Int) -> Int, height: Int = 0) -> Int {
+        switch self {
+        case .empty:
+            return height
+        case let .node(_, left, right):
+            return 1 + comparator(
+                left.getHeightBy(comparator: comparator, height: height),
+                right.getHeightBy(comparator: comparator, height: height)
+            )
+        }
+    }
+    
+    func getMaxHeight() -> Int {
+        return getHeightBy(comparator: max)
+    }
+    
+    func getMinHeight() -> Int {
+        return getHeightBy(comparator: min)
+    }
+    
+    func isBalanced() -> Bool {
+        return getMaxHeight() - getMinHeight() <= 1
+    }
+    
     static func fromArray(_ array: [Element]) -> Tree<Element> {
         return array.reduce(.empty) { $0.insert(value: $1) }
     }
 }
 
 let tree: Tree<Int> = Tree.fromArray([5, 4, 10, 3])
+
+tree.getMaxHeight()
+tree.getMinHeight()
+
+tree.isBalanced()
