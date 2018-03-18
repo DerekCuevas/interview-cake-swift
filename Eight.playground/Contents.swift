@@ -2,11 +2,11 @@
 
 import UIKit
 
-indirect enum Tree<U: Comparable> {
+indirect enum Tree<Element: Comparable> {
     case empty
-    case node(U, Tree<U>, Tree<U>)
+    case node(Element, Tree<Element>, Tree<Element>)
     
-    func getValue() -> U? {
+    func getValue() -> Element? {
         switch self {
         case let .node(value, _, _):
             return value
@@ -15,7 +15,7 @@ indirect enum Tree<U: Comparable> {
         }
     }
     
-    func getLeft() -> Tree<U> {
+    func getLeft() -> Tree<Element> {
         switch self {
         case let .node(_, left, _):
             return left
@@ -24,7 +24,7 @@ indirect enum Tree<U: Comparable> {
         }
     }
     
-    func getRight() -> Tree<U> {
+    func getRight() -> Tree<Element> {
         switch self {
         case let .node(_, _, right):
             return right
@@ -33,7 +33,7 @@ indirect enum Tree<U: Comparable> {
         }
     }
     
-    func insert(value: U) -> Tree<U> {
+    func insert(value: Element) -> Tree<Element> {
         switch self {
         case .empty:
             return .node(value, .empty, .empty)
@@ -48,7 +48,7 @@ indirect enum Tree<U: Comparable> {
         }
     }
     
-    static func fromArray(_ array: [U]) -> Tree<U> {
+    static func fromArray(_ array: [Element]) -> Tree<Element> {
         return array.reduce(.empty) { $0.insert(value: $1) }
     }
 }
